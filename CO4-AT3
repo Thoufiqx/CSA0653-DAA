@@ -1,0 +1,36 @@
+# Investment Portfolio Optimization using Dynamic Programming
+
+investments = ["A", "B", "C", "D"]
+capital = [20, 30, 40, 50]      # in thousands
+returns = [25, 40, 50, 70]      # in thousands
+budget = 80                     # in thousands
+
+n = len(investments)
+
+# DP Table
+dp = [[0 for _ in range(budget + 1)] for _ in range(n + 1)]
+
+# Fill DP Table
+for i in range(1, n + 1):
+    for w in range(1, budget + 1):
+        if capital[i - 1] <= w:
+            dp[i][w] = max(
+                returns[i - 1] + dp[i - 1][w - capital[i - 1]],
+                dp[i - 1][w]
+            )
+        else:
+            dp[i][w] = dp[i - 1][w]
+
+# Find selected investments
+selected = []
+w = budget
+
+for i in range(n, 0, -1):
+    if dp[i][w] != dp[i - 1][w]:
+        selected.append(investments[i - 1])
+        w -= capital[i - 1]
+
+selected.reverse()
+
+print("Optimal Investment Portfolio:", selected)
+print("Maximum Return = ₹", dp[n][budget] * 1000)
