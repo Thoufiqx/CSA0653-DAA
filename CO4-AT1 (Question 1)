@@ -9,6 +9,7 @@ selected = [False] * n
 selected[0] = True
 
 total_weight = 0
+mst_edges = []
 
 for _ in range(n - 1):
     minimum = float('inf')
@@ -22,7 +23,12 @@ for _ in range(n - 1):
                         minimum = graph[i][j]
                         x, y = i, j
 
+    mst_edges.append((x, y, graph[x][y]))
     total_weight += graph[x][y]
     selected[y] = True
 
-print("Total weight =", total_weight)
+print("Minimum Spanning Tree Edges:")
+for u, v, w in mst_edges:
+    print(f"({u}, {v}) -> Weight = {w}")
+
+print("\nTotal Weight =", total_weight)
