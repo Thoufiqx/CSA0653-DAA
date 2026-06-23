@@ -1,3 +1,5 @@
+# Kruskal's Algorithm - Detailed Execution
+
 edges = [
     (0, 1, 2),
     (0, 2, 3),
@@ -16,13 +18,40 @@ def find(x):
 def union(x, y):
     parent[find(x)] = find(y)
 
+# Sort edges by weight
 edges.sort(key=lambda x: x[2])
 
+print("Sorted Edges:")
+for edge in edges:
+    print(edge)
+
 mst_cost = 0
+mst_edges = []
+
+print("\nStep-by-Step Execution:\n")
 
 for u, v, w in edges:
-    if find(u) != find(v):
-        union(u, v)
-        mst_cost += w
+    print(f"Checking Edge ({u}, {v}) with Weight {w}")
 
-print("MST Cost =", mst_cost)
+    if find(u) != find(v):
+        print("-> No Cycle Detected")
+        print("-> Edge Added to MST")
+
+        union(u, v)
+
+        mst_cost += w
+        mst_edges.append((u, v, w))
+
+        print("Current Parent Array:", parent)
+        print("Current MST Cost:", mst_cost)
+    else:
+        print("-> Cycle Detected")
+        print("-> Edge Rejected")
+
+    print("-" * 40)
+
+print("\nMinimum Spanning Tree Edges:")
+for u, v, w in mst_edges:
+    print(f"({u}, {v}) -> Weight = {w}")
+
+print("\nFinal MST Cost =", mst_cost)
