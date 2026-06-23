@@ -1,29 +1,33 @@
-print("Question 2 Output:")
-def binary_search(arr, target):
+# Binary Search with Iteration Count
+
+def binary_search(arr, key):
     low = 0
     high = len(arr) - 1
-    count = 0
+    iterations = 0
+
     while low <= high:
-        count += 1
+        iterations += 1
         mid = (low + high) // 2
-        if arr[mid] == target:
-            return mid, count
-        elif arr[mid] < target:
+
+        if arr[mid] == key:
+            return mid, iterations
+        elif arr[mid] < key:
             low = mid + 1
         else:
             high = mid - 1
-    return -1, count
-n = int(input("Enter the number of elements in the sorted array: "))
-arr = []
-print("Enter the elements in sorted order:")
-for i in range(n):
-    element = int(input(f"Enter element {i+1}: "))
-    arr.append(element)
-target = int(input("Enter the element to search: "))
-index, iterations = binary_search(arr, target)
-if index != -1:
-    print("Element found at index:", index)
-    print("Iterations:", iterations)
-else:
-    print("Element not found")
-    print("Iterations:", iterations)
+
+    return -1, iterations
+
+# Test for different input sizes
+sizes = [100, 1000, 10000, 100000]
+
+for n in sizes:
+    arr = list(range(1, n + 1))
+    key = n  # Search last element
+
+    pos, iterations = binary_search(arr, key)
+
+    print(f"Input Size = {n}")
+    print(f"Element Found at Position = {pos}")
+    print(f"Iterations Required = {iterations}")
+    print("-" * 30)
