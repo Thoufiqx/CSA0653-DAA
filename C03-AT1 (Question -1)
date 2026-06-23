@@ -33,35 +33,4 @@ merge_sort(arr)
 print("Sorted Array:", arr)
 print()
 
-
-# Question 2
-print("Question 2 Output:")
-def binary_search(arr, target):
-    low = 0
-    high = len(arr) - 1
-    count = 0
-    while low <= high:
-        count += 1
-        mid = (low + high) // 2
-        if arr[mid] == target:
-            return mid, count
-        elif arr[mid] < target:
-            low = mid + 1
-        else:
-            high = mid - 1
-    return -1, count
-n = int(input("Enter the number of elements in the sorted array: "))
-arr = []
-print("Enter the elements in sorted order:")
-for i in range(n):
-    element = int(input(f"Enter element {i+1}: "))
-    arr.append(element)
-target = int(input("Enter the element to search: "))
-index, iterations = binary_search(arr, target)
-if index != -1:
-    print("Element found at index:", index)
-    print("Iterations:", iterations)
-else:
-    print("Element not found")
-    print("Iterations:", iterations)
 print()
