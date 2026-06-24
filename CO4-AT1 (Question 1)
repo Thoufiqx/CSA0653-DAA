@@ -32,3 +32,4 @@ for u, v, w in mst_edges:
     print(f"({u}, {v}) -> Weight = {w}")
 
 print("\nTotal Weight =", total_weight)
+print("Number of Edges =", len(mst_edges))
