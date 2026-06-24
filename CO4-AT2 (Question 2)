@@ -1,0 +1,41 @@
+# Manufacturing Resource Allocation using Dynamic Programming
+
+products = ["A", "B", "C", "D"]
+
+investment = [20000, 30000, 40000, 50000]
+profit = [25000, 40000, 50000, 65000]
+
+budget = 100000
+n = len(products)
+
+# Convert to units of 1000 for smaller DP table
+budget = budget // 1000
+investment = [x // 1000 for x in investment]
+
+dp = [[0 for _ in range(budget + 1)] for _ in range(n + 1)]
+
+for i in range(1, n + 1):
+    for w in range(budget + 1):
+        if investment[i - 1] <= w:
+            dp[i][w] = max(
+                profit[i - 1] + dp[i - 1][w - investment[i - 1]],
+                dp[i - 1][w]
+            )
+        else:
+            dp[i][w] = dp[i - 1][w]
+
+max_profit = dp[n][budget]
+
+# Find selected products
+selected = []
+w = budget
+
+for i in range(n, 0, -1):
+    if dp[i][w] != dp[i - 1][w]:
+        selected.append(products[i - 1])
+        w -= investment[i - 1]
+
+selected.reverse()
+
+print("Selected Products:", selected)
+print("Maximum Profit: ₹", max_profit)
