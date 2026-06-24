@@ -17,10 +17,7 @@ def binary_search(arr, key):
             high = mid - 1
 
     return -1, iterations
-
-# Test for different input sizes
 sizes = [100, 1000, 10000, 100000]
-
 for n in sizes:
     arr = list(range(1, n + 1))
     key = n  # Search last element
