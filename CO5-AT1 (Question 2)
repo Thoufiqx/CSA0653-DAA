@@ -1,1 +1,53 @@
+# Q2: Exam Timetabling using Graph Coloring and Backtracking
 
+exams = ["Math", "Physics", "Chemistry", "Biology"]
+graph = {
+    "Math": ["Physics", "Chemistry"],
+    "Physics": ["Math", "Biology"],
+    "Chemistry": ["Math"],
+    "Biology": ["Physics"]
+}
+
+time_slots = ["Slot1", "Slot2", "Slot3"]
+rooms = {
+    "Room A": 40,
+    "Room B": 30
+}
+students = {
+    "Math": 35,
+    "Physics": 25,
+    "Chemistry": 20,
+    "Biology": 28
+}
+
+schedule = {}
+def is_safe(exam, slot):
+    for neighbor in graph[exam]:
+        if neighbor in schedule and schedule[neighbor][0] == slot:
+            return False
+    return True
+def solve(index):
+    if index == len(exams):
+        return True
+    exam = exams[index]
+    for slot in time_slots:
+        for room, capacity in rooms.items():
+            if students[exam] <= capacity and is_safe(exam, slot):
+                schedule[exam] = (slot, room)
+                if solve(index + 1):
+                    return True
+                del schedule[exam]
+    return False
+if solve(0):
+    print("EXAM TIMETABLING USING GRAPH COLORING")
+    print("-" * 45)
+    for exam, (slot, room) in schedule.items():
+        print(f"{exam:10} -> {slot} , {room}")
+
+    print("\nConstraints Satisfied:")
+    print("1. No student has overlapping exams.")
+    print("2. Room capacity is sufficient.")
+    print("3. Graph coloring prevents conflicts.")
+    print("4. Backtracking finds a feasible timetable.")
+else:
+    print("No valid timetable found.")
