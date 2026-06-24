@@ -1,1 +1,47 @@
+# Q1: Job Scheduling using Backtracking (Constraint Satisfaction Problem)
 
+jobs = [
+    {"id": "J1", "deadline": 2},
+    {"id": "J2", "deadline": 1},
+    {"id": "J3", "deadline": 3},
+    {"id": "J4", "deadline": 2}
+]
+employees = ["E1", "E2"]
+best_schedule = []
+
+def is_valid(employee, time_slot, schedule):
+    for job, emp, slot in schedule:
+        if emp == employee and slot == time_slot:
+            return False
+    return True
+
+def backtrack(job_index, schedule):
+    global best_schedule
+    if job_index == len(jobs):
+        best_schedule = schedule[:]
+        return True
+
+    job = jobs[job_index]
+    for slot in range(1, job["deadline"] + 1):
+        for emp in employees:
+            if is_valid(emp, slot, schedule):
+                schedule.append((job["id"], emp, slot))
+                if backtrack(job_index + 1, schedule):
+                    return True
+                schedule.pop()
+    return False
+backtrack(0, [])
+print("JOB SCHEDULING USING BACKTRACKING")
+print("-" * 40)
+if best_schedule:
+    print("Feasible Schedule Found:\n")
+    for job, emp, slot in best_schedule:
+        print(f"Job {job} -> Employee {emp} at Time Slot {slot}")
+else:
+    print("No feasible schedule exists.")
+
+print("\nConstraint Satisfaction:")
+print("1. Every job completed before deadline.")
+print("2. No employee handles more than one job at a time.")
+print("3. Recursive assignment used.")
+print("4. Invalid assignments pruned immediately.")
